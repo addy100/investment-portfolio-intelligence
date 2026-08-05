@@ -2,11 +2,13 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
 // https://vitejs.dev/config/
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   plugins: [react()],
-  base: './', // Ensures relative asset paths work on GitHub Pages
+  // Uses '/' for localhost dev server and './' for GitHub Pages static build
+  base: mode === 'production' ? './' : '/',
   server: {
     port: 5173,
+    host: true,
     proxy: {
       '/api': {
         target: 'http://localhost:8000',
@@ -14,4 +16,4 @@ export default defineConfig({
       }
     }
   }
-})
+}))
