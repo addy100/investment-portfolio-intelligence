@@ -1,0 +1,16 @@
+name: Refresh market data
+
+on:
+  schedule:
+    - cron: "30 18 * * 1-5"
+  workflow_dispatch:
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: python etl/refresh.py
