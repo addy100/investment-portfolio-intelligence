@@ -23,8 +23,11 @@ jobs:
       - uses: actions/checkout@v4
       - name: Configure API endpoint
         run: |
-          test -n "$API_BASE_URL"
-          sed -i "s|http://localhost:8000|$API_BASE_URL|" frontend/config.js
+          if [ -n "$API_BASE_URL" ]; then
+            sed -i "s|http://localhost:8000|$API_BASE_URL|" frontend/config.js
+          else
+            echo "API_BASE_URL is not set; publishing the frontend in waiting-for-API mode."
+          fi
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
