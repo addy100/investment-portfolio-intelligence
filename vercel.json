@@ -1,7 +1,16 @@
 {
   "version": 2,
-  "public": true,
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+  "name": "investment-portfolio-intelligence",
+  "builds": [
+    {
+      "src": "index.html",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
   ]
 }
