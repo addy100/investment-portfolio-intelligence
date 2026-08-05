@@ -18,7 +18,8 @@ app.add_middleware(
 
 
 def pending(feature: str) -> ApiMessage:
-    return ApiMessage(detail=f"{feature} will be populated after the portfolio import and ETL modules ship.")
+    detail = f"{feature} will be populated after the portfolio import and ETL modules ship."
+    return ApiMessage(detail=detail)
 
 
 @app.get("/health")
