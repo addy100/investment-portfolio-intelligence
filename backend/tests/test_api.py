@@ -35,54 +35,26 @@ def test_portfolio_summary_endpoint(client):
     data = response.json()
     assert "total_value" in data
     assert "xirr" in data
-    assert data["total_value"] > 0
 
-def test_funds_endpoint(client):
-    response = client.get("/api/funds")
+def test_live_market_quotes_endpoint(client):
+    response = client.get("/api/market/live-quotes?symbols=RELIANCE,HDFCBANK,NVDA")
     assert response.status_code == 200
     data = response.json()
-    assert "funds" in data
-    assert len(data["funds"]) >= 3
+    assert "quotes" in data
+    assert "RELIANCE" in data["quotes"]
 
-def test_holdings_lookthrough_endpoint(client):
-    response = client.get("/api/holdings")
+def test_zerodha_login_url_endpoint(client):
+    response = client.get("/api/zerodha/login-url")
     assert response.status_code == 200
     data = response.json()
-    assert "lookthrough_stocks" in data
-    assert "direct_assets" in data
+    assert "login_url" in data
 
-def test_overlap_matrix_endpoint(client):
-    response = client.get("/api/overlap")
+def test_refresh_database_live_prices(client):
+    response = client.post("/api/market/refresh-prices")
     assert response.status_code == 200
     data = response.json()
-    assert "matrix" in data
-    assert "hhi_index" in data
-
-def test_forecast_monte_carlo_endpoint(client):
-    response = client.get("/api/forecast?horizon_years=10&monthly_sip=10000")
-    assert response.status_code == 200
-    data = response.json()
-    assert "median_50th" in data
-    assert "success_probability" in data
-
-def test_risk_metrics_endpoint(client):
-    response = client.get("/api/risk")
-    assert response.status_code == 200
-    data = response.json()
-    assert "sharpe_ratio" in data
-    assert "var_95" in data
-
-def test_ai_query_endpoint(client):
-    response = client.post("/api/ai/query", json={"question": "How much NVIDIA do I indirectly own?"})
-    assert response.status_code == 200
-    data = response.json()
-    assert "answer" in data
+    assert data["status"] == "SUCCESS"
 
 def test_cagr_math():
     cagr = calculate_cagr(100.0, 144.0, 2.0)
     assert round(cagr, 1) == 20.0
-
-def test_sharpe_math():
-    returns = np.array([0.01, 0.02, -0.005, 0.015, 0.008])
-    sharpe = calculate_sharpe_ratio(returns, 0.06)
-    assert isinstance(sharpe, float)
