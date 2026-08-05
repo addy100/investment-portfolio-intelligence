@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv
+*.db
+*.sqlite3
+
+# Node / Frontend
+node_modules/
+dist/
+build/
+.DS_Store
+*.log
+.env
+.env.local
+
+# IDEs & Editors
+.vscode/
+.idea/
+*.swp
+
+# Generated Outputs
+exports/*.xlsx
+output/*.json

@@ -1,0 +1,82 @@
+{
+  "name": "PortfolioIntelligenceDataset",
+  "version": "1.0.0",
+  "tables": [
+    {
+      "name": "Portfolio",
+      "columns": [
+        {"name": "portfolio_id", "dataType": "Int64"},
+        {"name": "name", "dataType": "String"},
+        {"name": "owner", "dataType": "String"}
+      ]
+    },
+    {
+      "name": "Transactions",
+      "columns": [
+        {"name": "transaction_id", "dataType": "Int64"},
+        {"name": "portfolio_id", "dataType": "Int64"},
+        {"name": "asset_type", "dataType": "String"},
+        {"name": "asset_symbol", "dataType": "String"},
+        {"name": "transaction_date", "dataType": "DateTime"},
+        {"name": "units", "dataType": "Double"},
+        {"name": "price", "dataType": "Double"},
+        {"name": "total_amount", "dataType": "Double"}
+      ]
+    },
+    {
+      "name": "LookthroughHoldings",
+      "columns": [
+        {"name": "ticker", "dataType": "String"},
+        {"name": "company_name", "dataType": "String"},
+        {"name": "sector", "dataType": "String"},
+        {"name": "country", "dataType": "String"},
+        {"name": "direct_value", "dataType": "Double"},
+        {"name": "indirect_value", "dataType": "Double"},
+        {"name": "total_value", "dataType": "Double"},
+        {"name": "effective_weight", "dataType": "Double"}
+      ]
+    },
+    {
+      "name": "RiskMetrics",
+      "columns": [
+        {"name": "metric_id", "dataType": "Int64"},
+        {"name": "sharpe_ratio", "dataType": "Double"},
+        {"name": "sortino_ratio", "dataType": "Double"},
+        {"name": "var_95", "dataType": "Double"},
+        {"name": "max_drawdown", "dataType": "Double"},
+        {"name": "volatility", "dataType": "Double"}
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "name": "Portfolio_Transactions",
+      "fromTable": "Transactions",
+      "fromColumn": "portfolio_id",
+      "toTable": "Portfolio",
+      "toColumn": "portfolio_id"
+    }
+  ],
+  "measures": [
+    {
+      "name": "Total Portfolio Value",
+      "expression": "SUM(LookthroughHoldings[total_value])",
+      "formatString": "₹#,##0.00"
+    },
+    {
+      "name": "Total Invested",
+      "expression": "SUM(Transactions[total_amount])",
+      "formatString": "₹#,##0.00"
+    },
+    {
+      "name": "Unrealized Gain",
+      "expression": "[Total Portfolio Value] - [Total Invested]",
+      "formatString": "₹#,##0.00"
+    },
+    {
+      "name": "Sharpe Ratio",
+      "expression": "AVERAGE(RiskMetrics[sharpe_ratio])",
+      "formatString": "0.00"
+    }
+  ]
+}
