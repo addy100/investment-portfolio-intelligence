@@ -1,5 +1,5 @@
 import React from 'react';
-import { TrendingUp, PieChart, Layers, ShieldAlert, LineChart, Bot, Download, RefreshCw } from 'lucide-react';
+import { TrendingUp, PieChart, Layers, ShieldAlert, LineChart, Bot, Download, RefreshCw, Zap } from 'lucide-react';
 
 export default function Navbar({ activeTab, setActiveTab, onExportExcel }) {
   const navItems = [
@@ -29,7 +29,7 @@ export default function Navbar({ activeTab, setActiveTab, onExportExcel }) {
         justifyContent: 'space-between',
         height: '70px'
       }}>
-        {/* Brand Logo */}
+        {/* Brand Logo & Open Source Badge */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           <div style={{
             width: '40px',
@@ -44,11 +44,14 @@ export default function Navbar({ activeTab, setActiveTab, onExportExcel }) {
             <TrendingUp size={22} color="#ffffff" />
           </div>
           <div>
-            <div style={{ fontWeight: 800, fontSize: '1.15rem', letterSpacing: '-0.5px' }}>
+            <div style={{ fontWeight: 800, fontSize: '1.15rem', letterSpacing: '-0.5px', display: 'flex', alignItems: 'center', gap: '8px' }}>
               PORTFOLIO<span className="gradient-text">INTELLIGENCE</span>
+              <span className="pill-badge pill-emerald" style={{ fontSize: '0.65rem', padding: '2px 8px' }}>
+                <Zap size={10} style={{ marginRight: '4px' }} /> Open Source APIs
+              </span>
             </div>
             <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 600 }}>
-              DEEP LOOK-THROUGH & FORECAST ENGINE
+              MFAPI.in + NSE Open Market Feed • Zero API Keys
             </div>
           </div>
         </div>
@@ -86,7 +89,7 @@ export default function Navbar({ activeTab, setActiveTab, onExportExcel }) {
 
         {/* Export & Status Actions */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <button className="btn-secondary" onClick={() => window.location.reload()} title="Refresh Data">
+          <button className="btn-secondary" onClick={() => window.location.reload()} title="Refresh Open Data">
             <RefreshCw size={15} />
           </button>
           <button className="btn-primary" onClick={onExportExcel}>
